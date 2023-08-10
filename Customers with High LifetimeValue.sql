@@ -1,13 +1,14 @@
+-- Identify customers with high lifetime value (total spending over 1000) and list their names and total spending.
 SELECT
-    c.first_name,
-    c.last_name,
-    SUM(p.amount) AS total_spent
+    customer.first_name,
+    customer.last_name,
+    SUM(payment.amount) AS total_spending
 FROM
-    customer AS c
-    JOIN payment AS p ON c.customer_id = p.customer_id
+    customer
+    JOIN payment ON customer.customer_id = payment.customer_id
 GROUP BY
-    c.customer_id
+    customer.customer_id
 HAVING
-    total_spent > 1000
+    SUM(payment.amount) > 1000
 ORDER BY
-    total_spent DESC;
+    total_spending DESC;
